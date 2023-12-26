@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+	char TTTboard [3][3];
+	char spotChar = '1';
+  
+	for(int r = 0; r<3; r++ ){
+		for(int c = 0; c<3; c++){
+			TTTboard[r][c] = spotChar++;
+		}
+	}
+  
+	int counter = 0;
+	char playerChar, spotChoice;
+	bool spotFound, gameover = true;
+  
+	do{
+		system("cls");
+		//printing the board		
+		for(int r = 0; r<3; r++ ){
+			for(int c = 0; c<3; c++){
+				cout << TTTboard[r][c] <<" ";
+			}
+			cout << endl;
+		}
+
+		// Alternate X and O and do the following:	
+		if(counter % 2 == 0){
+			playerChar = 'X';
+		} else{
+			playerChar = 'O';
+		}
+	
+		// ask the user to pick a spot (spotChoice) (1-9)			
+		
+		do{
+      gameover = false;
+			cout << "Enter a spot for " << playerChar <<": ";
+			cin >> spotChoice;
+			spotFound = false;
+			// looking for spot s in TTTboard
+			for(int r = 0; r<3; r++ ){
+				for(int c = 0; c<3; c++){
+					// if it's available insert X/O into spot s
+					if(TTTboard[r][c] ==  spotChoice){
+						TTTboard[r][c] = playerChar;
+						//raise a boolean flag to indicate spot is available.
+						spotFound = true;
+					}
+				}
+			}
+
+      
+      //check horizontal
+      for (int i=0; i<3; i++){
+        for (int a=0; a<1; a++){
+          if((TTTboard[i][a] == 'X' && TTTboard[i][a+1] == 'X' && TTTboard[i][a+2] == 'X') || (TTTboard[i][a] == 'O' && TTTboard[i][a+1] == 'O' && TTTboard[i][a+2] == 'O')){
+            gameover = true;
+            for (int r=0; r<3; r++){
+              for (int c=0; c<3; c++){
+                cout << TTTboard[r][c] << " ";
+              }
+              cout <<endl;
+            }
+          }
+        }
+      }
+
+
+      //check vertical
+      for (int i=0; i<1; i++){
+        for (int a=0; a<3; a++){
+          if((TTTboard[i][a] == 'X' && TTTboard[i+1][a] == 'X' && TTTboard[i+2][a] == 'X') || (TTTboard[i][a] == 'O' && TTTboard[i+1][a] == 'O' && TTTboard[i+2][a] == 'O')){
+            gameover = true;
+            for (int r=0; r<3; r++){
+              for (int c=0; c<3; c++){
+                cout << TTTboard[r][c] << " ";
+              }
+              cout <<endl;
+            }
+          }
+        }
+      }
+
+      //check diagnal
+      if(TTTboard[0][0] == 'X' && TTTboard[1][1] == 'X' && TTTboard[2][2] == 'X'){
+        gameover = true;
+        for(int r = 0; r<3; r++ ){
+			for(int c = 0; c<3; c++){
+				cout << TTTboard[r][c] <<" ";
+			}
+			cout << endl;
+		}
+      }
+      if(TTTboard[2][0] == 'X' && TTTboard[1][1] == 'X' && TTTboard[0][2] == 'X'){
+        gameover = true;
+        for(int r = 0; r<3; r++ ){
+			for(int c = 0; c<3; c++){
+				cout << TTTboard[r][c] <<" ";
+			}
+			cout << endl;
+		}
+      }
+
+      
+		//if not: ask to try again.
+		} while(!spotFound);
+		counter++;
+		
+		// check if game is over
+		
+	} while(!gameover);			
+}
